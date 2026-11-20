@@ -23,161 +23,374 @@
       --solar-amber: #fb923c;
       --emerald: #10b981;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+    .grid-bg { position: fixed; inset: 0; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 30%, transparent 100%); pointer-events: none; z-index: 0; }
+    .solar-orb { position: absolute; top: -140px; right: -80px; width: 560px; height: 560px; border-radius: 50%; background: radial-gradient(circle at 38% 38%, rgba(251, 146, 60, 0.42) 0%, rgba(249, 115, 22, 0.24) 32%, rgba(220, 38, 38, 0.12) 58%, transparent 75%); filter: blur(48px); pointer-events: none; z-index: 0; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+    header { border-bottom: 1px solid var(--border-subtle); background: rgba(6, 8, 12, 0.85); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 50; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
+    .photon-mark { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #fdba74, #f97316 55%, #b91c1c 100%); box-shadow: 0 0 18px rgba(249, 115, 22, 0.65); }
+    .brand-name { font-weight: 700; font-size: 1.15rem; letter-spacing: 0.14em; }
+    .brand-tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; border: 1px solid var(--border-subtle); color: var(--text-secondary); background: rgba(255, 255, 255, 0.03); }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; }
+    .btn-primary { background: linear-gradient(135deg, #f97316 0%, #dc2626 100%); color: #fff; }
+    .btn-secondary { background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border-color: var(--border-subtle); }
+    .btn-sm { padding: 8px 16px; font-size: 0.825rem; }
+    .hero { padding: 96px 0 80px; position: relative; }
+    .status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.25); color: #fdba74; font-size: 0.78rem; font-weight: 500; margin-bottom: 28px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background-color: var(--emerald); }
+    .hero h1 { font-size: clamp(2.4rem, 5vw, 3.85rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; max-width: 820px; margin-bottom: 24px; }
+    .hero h1 span { background: linear-gradient(90deg, #ffffff 0%, #fdba74 60%, #f97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p.lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 680px; margin-bottom: 36px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 56px; }
+    .metrics-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-subtle); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+    .metric-item { background: var(--bg-secondary); padding: 20px 24px; }
+    .metric-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+    .metric-value { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
+    section { padding: 80px 0; border-top: 1px solid var(--border-subtle); }
+    .section-header { margin-bottom: 48px; }
+    .section-kicker { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--solar-orange); font-weight: 600; margin-bottom: 10px; }
+    .section-title { font-size: 1.95rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .section-desc { color: var(--text-secondary); max-width: 640px; font-size: 1rem; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 32px; }
+    .card:hover { border-color: var(--border-accent); }
+    .card-index { font-size: 0.75rem; color: var(--solar-amber); margin-bottom: 14px; display: block; }
+    .card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+    .card p { color: var(--text-secondary); font-size: 0.94rem; line-height: 1.65; }
+    .arch-box { display: grid; grid-template-columns: 1fr 1.15fr; gap: 32px; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 36px; }
+    .spec-list { list-style: none; margin-top: 20px; }
+    .spec-list li { padding: 12px 0; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; font-size: 0.9rem; gap: 16px; }
+    .spec-list li:last-child { border-bottom: none; }
+    .spec-key { color: var(--text-muted); }
+    .spec-val { color: var(--text-primary); font-weight: 500; text-align: right; }
+    .terminal { background: #030407; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; overflow: hidden; }
+    .terminal-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted); }
+    .terminal pre { padding: 20px; font-size: 0.82rem; line-height: 1.65; color: #e2e8f0; overflow-x: auto; }
+    .token-comment { color: #64748b; }
+    .token-key { color: #fb923c; }
+    .token-str { color: #34d399; }
+    .macro-card { background: linear-gradient(145deg, rgba(16, 21, 30, 0.95) 0%, rgba(28, 14, 12, 0.65) 100%); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 12px; padding: 44px; }
+    .macro-card h2 { font-size: 1.65rem; font-weight: 700; margin-bottom: 18px; }
+    .macro-card p { color: #cbd5e1; font-size: 1.02rem; line-height: 1.75; max-width: 880px; }
+    footer { border-top: 1px solid var(--border-subtle); padding: 48px 0; background: #040508; font-size: 0.85rem; color: var(--text-muted); }
+    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 24px; }
+    .footer-legal p { margin-bottom: 6px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links button, .footer-links a { background: none; border: none; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; text-decoration: none; font-family: inherit; }
+    .footer-links button:hover, .footer-links a:hover { color: var(--solar-amber); }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 100; }
+    .modal-backdrop.active { display: flex; }
+    .modal-box { background: #0d1119; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 10px; max-width: 680px; width: 100%; max-height: 85vh; display: flex; flex-direction: column; }
+    .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; }
+    .modal-header h3 { font-size: 1.1rem; font-weight: 600; }
+    .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 1.4rem; cursor: pointer; }
+    .modal-body { padding: 24px; overflow-y: auto; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; }
+    .modal-body h4 { color: var(--text-primary); margin: 16px 0 6px; font-size: 0.95rem; }
+    .modal-body h4:first-child { margin-top: 0; }
+    @media (max-width: 860px) {
+      .metrics-strip { grid-template-columns: repeat(2, 1fr); }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .arch-box { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .macro-card { padding: 28px 22px; }
     }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
+    @media (max-width: 480px) {
+      .metrics-strip { grid-template-columns: 1fr; }
+      .hero { padding: 64px 0 56px; }
     }
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="solar-orb"></div>
 
-    code, pre, .mono {
-      font-family: 'JetBrains Mono', monospace;
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <div class="photon-mark" aria-hidden="true"></div>
+        <span class="brand-name">LUMIST</span>
+        <span class="brand-tag mono">UK-DOMICILED</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#infrastructure">Infrastructure</a>
+        <a href="#architecture">API Architecture</a>
+        <a href="#macro-outlook">Macro Thesis</a>
+        <button class="btn btn-primary btn-sm" onclick="openModal('accessModal')">Request API Access</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="border-top: none;">
+      <div class="container">
+        <div class="status-pill mono">
+          <span class="status-dot"></span>
+          MULTI-ROUTE INFERENCE GATEWAY &bull; OPERATIONAL
+        </div>
+        <h1>
+          Institutional-Grade AI Inference. <span>UK-Domiciled.</span>
+        </h1>
+        <p class="lead">
+          High-throughput, OpenAI-compatible API routing engineered for disciplined cost arbitrage, multi-route resilience, and compliant UK corporate billing—built for engineering teams and enterprises across the UK and Europe.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="openModal('accessModal')">Request Institutional Access</button>
+          <a href="#architecture" class="btn btn-secondary">Inspect Endpoint Spec</a>
+        </div>
+
+        <div class="metrics-strip mono">
+          <div class="metric-item">
+            <div class="metric-label">Corporate Jurisdiction</div>
+            <div class="metric-value">England &amp; Wales</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Protocol Standard</div>
+            <div class="metric-value">OpenAI REST / v1</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Settlement &amp; Tax</div>
+            <div class="metric-value">GBP / HMRC Compliant</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-label">Routing Topology</div>
+            <div class="metric-value">Multi-Upstream Failover</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="infrastructure">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker mono">01 // EXECUTION &amp; GOVERNANCE</div>
+          <h2 class="section-title">Engineered for Production Continuity &amp; Unit Economics</h2>
+          <p class="section-desc">
+            Bridging cost-advantaged upstream compute liquidity with institutional UK corporate governance and deterministic API delivery.
+          </p>
+        </div>
+
+        <div class="pillars-grid">
+          <div class="card">
+            <span class="card-index mono">PILLAR 01 &mdash; ARBITRAGE</span>
+            <h3>Disciplined Cost Arbitrage &amp; Margin Efficiency</h3>
+            <p>
+              Direct programmatic access to high-efficiency frontier and open-weight model endpoints with institutional pricing discipline—substantially reducing token expenditure without compromising production throughput.
+            </p>
+          </div>
+          <div class="card">
+            <span class="card-index mono">PILLAR 02 &mdash; RESILIENCE</span>
+            <h3>Multi-Route Execution &amp; Long-Term Stability</h3>
+            <p>
+              Dynamic upstream routing and automated failover across diversified compute pools, engineered to eliminate single-vendor rate-limit bottlenecks and ensure continuous availability under sustained load.
+            </p>
+          </div>
+          <div class="card">
+            <span class="card-index mono">PILLAR 03 &mdash; GOVERNANCE</span>
+            <h3>UK Corporate Governance &amp; Compliant Delivery</h3>
+            <p>
+              Operated in the United Kingdom by <strong>LUMIST TECHNOLOGY LIMITED</strong>, offering transparent GBP settlement and HMRC-compliant commercial invoicing tailored for enterprise finance and audit workflows.
+            </p>
+          </div>
+          <div class="card">
+            <span class="card-index mono">PILLAR 04 &mdash; COMPATIBILITY</span>
+            <h3>Drop-In Protocol Compatibility</h3>
+            <p>
+              Native OpenAI-compatible endpoints allow immediate integration across existing Python/TypeScript SDKs, autonomous coding agents, and internal chat workspaces via a single base URL change.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+        <section id="architecture">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker mono">02 // TECHNICAL SPECIFICATION</div>
+          <h2 class="section-title">Zero-Friction Integration Architecture</h2>
+          <p class="section-desc">
+            Deploy immediately into existing production pipelines with unified key governance, granular usage telemetry, and TLS-encrypted routing.
+          </p>
+        </div>
+
+        <div class="arch-box">
+          <div>
+            <h3 style="font-size: 1.25rem; margin-bottom: 10px;">Gateway Parameters</h3>
+            <p style="color: var(--text-secondary); font-size: 0.92rem;">
+              Standard bearer authentication and JSON payload schema. Compatible with OpenAI, LangChain, LiteLLM, and Cursor/Cline agent frameworks.
+            </p>
+            <ul class="spec-list mono">
+              <li>
+                <span class="spec-key">Base Endpoint</span>
+                <span class="spec-val">https://api.lumistech.co.uk/v1</span>
+              </li>
+              <li>
+                <span class="spec-key">Authentication</span>
+                <span class="spec-val">Bearer Token (sk-lumist-...)</span>
+              </li>
+              <li>
+                <span class="spec-key">Data Retention</span>
+                <span class="spec-val">Zero Payload Training / TLS 1.3</span>
+              </li>
+              <li>
+                <span class="spec-key">Billing Currency</span>
+                <span class="spec-val">GBP (&pound;) Prepaid Ledger</span>
+              </li>
+              <li>
+                <span class="spec-key">Onboarding Desk</span>
+                <span class="spec-val">ai@lumistech.co.uk</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="terminal">
+            <div class="terminal-bar mono">
+              <span>POST /v1/chat/completions</span>
+            </div>
+            <pre><code><span class="token-comment"># Drop-in replacement for standard OpenAI clients</span>
+curl https://api.lumistech.co.uk/v1/chat/completions \
+  -H <span class="token-str">"Content-Type: application/json"</span> \
+  -H <span class="token-str">"Authorization: Bearer $LUMIST_API_KEY"</span> \
+  -d '{
+    <span class="token-key">"model"</span>: <span class="token-str">"claude-sonnet-4-5"</span>,
+    <span class="token-key">"messages"</span>: [{"role": "user", "content": "Execute quantitative summary."}],
+    <span class="token-key">"temperature"</span>: 0.1
+  }'</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="macro-outlook">
+      <div class="container">
+        <div class="macro-card">
+          <div class="section-kicker mono">03 // STRUCTURAL MACRO OUTLOOK</div>
+          <h2>Power Infrastructure Dictates Long-Term Compute Economics</h2>
+          <p>
+            As institutional AI deployment scales globally, sovereign power grid capacity and baseline energy pricing—not silicon supply alone—are emerging as the decisive determinants of inference cost and long-term operational stability. Regions constrained by grid bottlenecks face structural upward pressure on token pricing and capacity throttling. <strong>LUMIST</strong> is architected specifically around this macro reality: by anchoring our multi-route upstream topology in the world’s most cost-efficient, power-abundant compute ecosystems while delivering through a regulated UK corporate entity, we insulate our clients from energy-driven price inflation and supply volatility over the long horizon.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-legal">
+        <p style="color: var(--text-primary); font-weight: 600;">
+          &copy; 2026 LUMIST TECHNOLOGY LIMITED. All rights reserved.
+        </p>
+        <p>
+          Registered in England and Wales &bull; Company No. <span class="mono" style="color: var(--text-secondary);">17561382</span>
+        </p>
+        <p>
+          Institutional Desk &amp; Billing Inquiries: <a href="mailto:ai@lumistech.co.uk" style="color: var(--solar-amber); text-decoration: none;">ai@lumistech.co.uk</a>
+        </p>
+      </div>
+      <div class="footer-links">
+        <button onclick="openModal('termsModal')">Terms of Service</button>
+        <button onclick="openModal('privacyModal')">Privacy Policy</button>
+        <button onclick="openModal('accessModal')">Client Onboarding</button>
+      </div>
+    </div>
+  </footer>
+
+  <div id="accessModal" class="modal-backdrop" onclick="closeOnBackdrop(event, 'accessModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Institutional &amp; Enterprise API Onboarding</h3>
+        <button class="modal-close" onclick="closeModal('accessModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: 16px;">
+          LUMIST provisions dedicated API credentials and prepaid GBP credit ledgers for engineering teams, quantitative desks, and corporate enterprises.
+        </p>
+        <h4>Onboarding Protocol</h4>
+        <p>
+          1. Transmit your organization name, estimated monthly token volume, and primary model requirements to our institutional desk.<br />
+          2. Receive your sandbox/production API key and GBP settlement instructions accompanied by an HMRC-compliant commercial invoice.<br />
+          3. Route traffic immediately via <code style="color: var(--solar-amber);">https://api.lumistech.co.uk/v1</code>.
+        </p>
+        <div style="margin-top: 24px; padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 6px;">
+          <div class="mono" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">DIRECT ONBOARDING DESK</div>
+          <div class="mono" style="font-size: 1rem; color: var(--text-primary); margin-bottom: 14px;">ai@lumistech.co.uk</div>
+          <a href="mailto:ai@lumistech.co.uk?subject=LUMIST%20Institutional%20API%20Access%20Inquiry" class="btn btn-primary btn-sm">Compose Onboarding Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="termsModal" class="modal-backdrop" onclick="closeOnBackdrop(event, 'termsModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Terms of Service &mdash; LUMIST TECHNOLOGY LIMITED</h3>
+        <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. Scope of Service</h4>
+        <p>LUMIST TECHNOLOGY LIMITED (Company No. 17561382, registered in England and Wales) ("LUMIST", "we", "us") provides programmatic access to artificial intelligence inference APIs and web-based interface tools ("Services") strictly for lawful commercial, institutional, and software development purposes.</p>
+        <h4>2. Account &amp; Credential Security</h4>
+        <p>Clients are solely responsible for maintaining the confidentiality of issued API keys and authentication credentials. All token consumption and compute usage originating from your credentials shall be billed to your account ledger.</p>
+        <h4>3. Billing, Prepaid Credits &amp; Invoicing</h4>
+        <p>Services operate on a prepaid credit basis settled in Pounds Sterling (GBP). Commercial invoices are issued in accordance with UK HMRC record-keeping standards. Prepaid credits consumed via API execution are non-refundable.</p>
+        <h4>4. Acceptable Use &amp; Regulatory Compliance</h4>
+        <p>Clients shall not utilize the Services to generate unlawful material, conduct automated network abuse, circumvent upstream safety controls, or infringe third-party intellectual property rights. LUMIST reserves the right to suspend access immediately upon material breach.</p>
+        <h4>5. Availability &amp; Limitation of Liability</h4>
+        <p>While LUMIST employs multi-route upstream failover to maximize service continuity, Services are provided on an "as-is" and "as-available" basis. To the maximum extent permitted under the laws of England and Wales, LUMIST shall not be liable for indirect, consequential, or trading/operational losses arising from upstream latency or interruption.</p>
+        <h4>6. Governing Law</h4>
+        <p>These Terms of Service are governed by and construed in accordance with the laws of England and Wales. Official inquiries: ai@lumistech.co.uk.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="privacyModal" class="modal-backdrop" onclick="closeOnBackdrop(event, 'privacyModal')">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Privacy Policy &mdash; UK GDPR Compliance</h3>
+        <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4>1. Data Controller</h4>
+        <p>LUMIST TECHNOLOGY LIMITED (Company No. 17561382, England &amp; Wales) acts as Data Controller and processes personal data in strict compliance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.</p>
+        <h4>2. Corporate &amp; Billing Data Collected</h4>
+        <p>We collect only essential account and accounting metadata—including corporate contact name, business email address, billing details, payment confirmation records, and aggregate API token telemetry—necessary to administer accounts and issue HMRC-compliant commercial invoices.</p>
+        <h4>3. Inference Payload Confidentiality</h4>
+        <p>LUMIST operates strictly as a technical inference routing layer. We do not sell client prompts or completions, nor do we utilize client API payloads to train foundational models. Payloads are transmitted over TLS-encrypted channels solely to fulfill real-time inference requests.</p>
+        <h4>4. Payment Processors</h4>
+        <p>Card and electronic payments are processed through regulated third-party payment institutions (such as Stripe); LUMIST does not store raw payment card numbers on its infrastructure.</p>
+        <h4>5. Data Subject Rights &amp; Contact</h4>
+        <p>Under UK GDPR, you retain the right to request access to, rectification of, or erasure of your personal account records. For data protection inquiries, contact: ai@lumistech.co.uk.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
-
-    /* Subtle Institutional Grid Background */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 30%, transparent 100%);
-      pointer-events: none;
-      z-index: 0;
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
     }
-
-    /* Solar / Photon Corona Glow */
-    .solar-orb {
-      position: absolute;
-      top: -140px;
-      right: -80px;
-      width: 560px;
-      height: 560px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 38%, 
-        rgba(251, 146, 60, 0.42) 0%, 
-        rgba(249, 115, 22, 0.24) 32%, 
-        rgba(220, 38, 38, 0.12) 58%, 
-        transparent 75%);
-      filter: blur(48px);
-      pointer-events: none;
-      z-index: 0;
-      animation: coronaPulse 9s ease-in-out infinite alternate;
+    function closeOnBackdrop(event, id) {
+      if (event.target.id === id) {
+        closeModal(id);
+      }
     }
-
-    @keyframes coronaPulse {
-      0% { transform: scale(1) translate(0, 0); opacity: 0.85; }
-      100% { transform: scale(1.08) translate(-18px, 14px); opacity: 1; }
-    }
-
-    .container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Navigation */
-    header {
-      border-bottom: 1px solid var(--border-subtle);
-      background: rgba(6, 8, 12, 0.82);
-      backdrop-filter: blur(14px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 72px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-
-    .photon-mark {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #fdba74, #f97316 55%, #b91c1c 100%);
-      box-shadow: 0 0 18px rgba(249, 115, 22, 0.65), 0 0 36px rgba(220, 38, 38, 0.3);
-      position: relative;
-    }
-
-    .brand-name {
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: 0.14em;
-    }
-
-    .brand-tag {
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 4px;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-secondary);
-      background: rgba(255, 255, 255, 0.03);
-      letter-spacing: 0.06em;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 22px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(249, 115, 22, 0.28);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop.active').forEach(el => {
+          el.classList.remove('active');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
